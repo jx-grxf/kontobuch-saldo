@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <!-- Saldo, the booking model of Kontobuch: the T-account of the app icon, its postings drawn as a small
+       network (two nodes on debit, one on credit), and a spark in the red of the margin -->
+  <defs>
+    <linearGradient id="ink" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4163EE"/>
+      <stop offset="1" stop-color="#1C37A8"/>
+    </linearGradient>
+  </defs>
+  <rect x="100" y="100" width="824" height="824" rx="186" fill="url(#ink)"/>
+  <!-- T-account -->
+  <g stroke="#FFFFFF" stroke-width="40" stroke-linecap="round" fill="none">
+    <path d="M262 400H762"/>
+    <path d="M512 400V770"/>
+  </g>
+  <!-- connections -->
+  <g stroke="#FFFFFF" stroke-width="18" stroke-linecap="round" opacity="0.7" fill="none">
+    <path d="M362 530L662 600"/>
+    <path d="M362 670L662 600"/>
+  </g>
+  <!-- nodes -->
+  <g fill="#FFFFFF">
+    <circle cx="362" cy="530" r="44"/>
+    <circle cx="362" cy="670" r="44"/>
+    <circle cx="662" cy="600" r="52"/>
+  </g>
+  <!-- spark -->
+  <path d="M742 176C752 236 776 260 836 270C776 280 752 304 742 364C732 304 708 280 648 270C708 260 732 236 742 176Z" fill="#E4577F"/>
+</svg>
