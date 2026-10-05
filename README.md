@@ -28,8 +28,6 @@ Saldo:    Fallart: Gutschrift vom Lieferanten
 | Größe | 639 MB (GGUF, Q8_0) |
 | Grundlage | [Qwen3-0.6B](https://huggingface.co/Qwen/Qwen3-0.6B) von Qwen (Alibaba Cloud), Apache 2.0 |
 
-Alle Messungen stehen in **[BENCHMARKS.md](BENCHMARKS.md)**.
-
 ## Download
 
 Saldo ist **nicht Teil der Installation** von Kontobuch. Es wird einmal extra geladen, nur wenn du zustimmst.
@@ -80,6 +78,45 @@ Foto / PDF / Text → Texterkennung → Fälle, Belege, Tabellen
 - **Saldo urteilt nie allein.** Jede Antwort muss aufgehen und jeden Betrag des Falls buchen. Sie muss eine genannte Steuer, ein genanntes Konto und das Personenkonto enthalten und zum Wörterbuch der Regeln passen. Was durchfällt, wird verworfen.
 - **Bestätigt, aber verurteilt nie.** Stimmt die Buchung eines Schülers mit Saldo überein, gibt es den Haken. Weicht sie ab, kommt ein Hinweis, aber nie „falsch“. Eine falsche Antwort von Saldo kann deshalb keine richtige Buchung schlechtmachen.
 - **Nur auf dem Gerät.** Kein Fall und kein Foto verlässt den Computer.
+
+## Benchmarks
+
+Gemessen nur auf Fällen, die Saldo nie gesehen hat. *Richtig* heißt: Jedes Konto endet mit dem richtigen Betrag auf der richtigen Seite.
+
+<!-- benchmark:start -->
+**Neue Fälle** (400, mit Firmen, Personen, Waren und Formulierungen, die im Training nicht vorkamen)
+
+| Weg | richtig | falsch | keine Antwort | Genauigkeit | |
+|---|---:|---:|---:|---:|---|
+| Regeln allein | 256 | 0 | 144 | **64,0 %** | `█████████████░░░░░░░` |
+| Saldo allein | 384 | 13 | 3 | **96,0 %** | `███████████████████░` |
+| Regeln + Saldo | 397 | 1 | 2 | **99,2 %** | `████████████████████` |
+| **In der App** (Saldo geprüft) | 382 | 0 | 18 | **95,5 %** | `███████████████████░` |
+
+**Echte Übungsfälle** (69, aus *Unternehmensrechnung HTL I* und *HTL II*, nie trainiert)
+
+| Weg | richtig | falsch | keine Antwort | Genauigkeit | |
+|---|---:|---:|---:|---:|---|
+| Regeln allein | 57 | 0 | 12 | **82,6 %** | `█████████████████░░░` |
+| Saldo allein | 52 | 14 | 3 | **75,4 %** | `███████████████░░░░░` |
+| Regeln + Saldo | 67 | 2 | 0 | **97,1 %** | `███████████████████░` |
+| **In der App** (Saldo geprüft) | 67 | 0 | 2 | **97,1 %** | `███████████████████░` |
+
+**Verlauf** (Saldo allein / Regeln + Saldo)
+
+| Lauf | neue Fälle | Buchfälle | gemessen an |
+|---|---:|---:|---|
+| v5 | 96,0 % / 99,2 % | 75,4 % / 97,1 % | 400 neuen, 69 Buchfällen |
+| v4 | 61,0 % / 76,8 % | 66,7 % / 85,5 % | 400 neuen, 69 Buchfällen |
+| v3 | 88,5 % / 99,0 % | 72,5 % / 100,0 % | 200 neuen, 40 Buchfällen |
+| v2 | 87,8 % / 95,6 % | 67,5 % / 100,0 % | 2000 neuen, 40 Buchfällen |
+
+v4 und v5 wurden auf demselben Testsatz mit 44 Fallarten gemessen; 16 davon kannte v4 noch nicht. v2 und v3 wurden auf einem älteren, leichteren mit weniger Fallarten gemessen. Vergleichbar sind nur Zeilen mit gleichem Testsatz.
+
+*In der App* ist, was ein Schüler sieht: Regeln, wo sie sicher sind, sonst Saldo, aber nur mit Antworten, die die Prüfung der App bestehen. Deshalb steht dort bei *falsch* eine 0.
+<!-- benchmark:end -->
+
+Alle Messungen, auch nach Fallart und Übung: **[BENCHMARKS.md](BENCHMARKS.md)**.
 
 ## Modellkarte
 
